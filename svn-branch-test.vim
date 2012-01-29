@@ -25,10 +25,10 @@ if !exists('g:svn_branch_test_extract_regex')
 endif
 
 " コマンドの定義
-command! ShowBranch call ShowBranch()
+command! ShowBranch call s:show_branch()
 
 " コマンドの本体
-function! ShowBranch()
+function! s:show_branch()
   echo s:svn_branch_name(expand('%:p:h'))
 endfunction
 
