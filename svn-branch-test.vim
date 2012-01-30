@@ -8,7 +8,10 @@
 " SVNチェックアウト対象のルートからのパス
 "
 " デフォルトの正規表現は/branches/ブランチ名/*を想定
-
+"
+" .vimrcに次のように埋め込むことで編集中バッファに対応したブランチ名をステータスラインに表示する
+" set statusline=%n\:%y%F\\|%{(&fenc!=''?&fenc:&enc).'\|'.&ff.'\|'}%m%r%=<%l/%L:%p%%>(%{g:get_current_svn_branch_name()})
+"
 " 参考にしたコード:
 "   http://coderepos.org/share/browser/dotfiles/vim/kana/dot.vimrc?rev=7152
 "   http://www.vim.org/scripts/script.php?script_id=1234
@@ -29,7 +32,12 @@ command! ShowBranch call s:show_branch()
 
 " コマンドの本体
 function! s:show_branch()
-  echo s:svn_branch_name(expand('%:p:h'))
+  echo g:get_current_svn_branch_name()
+endfunction
+
+" カレントディレクトリのSVNブランチ名を取得
+function! g:get_current_svn_branch_name()
+  return s:svn_branch_name(expand('%:p:h'))
 endfunction
 
 " 指定したディレクトリのSVNブランチ名を返す(キャッシュ対応)
